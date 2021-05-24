@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.datasets import load_boston
-from MLP.Activations import Sigmoid, ReLu, Tanh, Softmax, Identity
+from MLP.Activations import Sigmoid, ReLu, Tanh, Identity
 from MLP.Loss import MeanSquaredError
 from sklearn.preprocessing import StandardScaler
 
@@ -9,7 +9,7 @@ class Layer:
 
     def __init__(self, activation, n_neurons):
         self.n_neurons = n_neurons
-        self.activation = activation()
+        self.activation = activation
         self.weights = None
         self.bias = None
         self.input = np.array([])
@@ -42,8 +42,8 @@ class Dense(Layer):
         self.a = self.activation.forward(self.z)
         return self.a
 
-    def backpropagate_error(self, a_error):
-        self.local_error = a_error * self.activation.backward()
+    def backpropagate_error(self, upper_error):
+        self.local_error = upper_error * self.activation.backward()
         previous_a_error = self.local_error.dot(self.weights.T)
         return previous_a_error
 
@@ -79,7 +79,6 @@ class Output(Layer):
     def backpropagate_error(self):
         self.local_error = self.cost_function.backward() * self.activation.backward()
         previous_a_error = self.local_error.dot(self.weights.T)
-        # previous_a_error = self.weights.dot(self.local_error)
         return previous_a_error
 
 

@@ -23,8 +23,8 @@ class Sigmoid(Activation):
         return self.a
 
     def backward(self):
-        local_derivative = self.alpha * (self.a * (1 - self.a))
-        return local_derivative
+        derivative = self.alpha * (self.a * (1 - self.a))
+        return derivative
 
 
 class Identity(Activation):
@@ -38,24 +38,8 @@ class Identity(Activation):
         return self.a
 
     def backward(self):
-        local_derivative = np.ones(self.z.shape)
-        return local_derivative
-
-
-class Softmax(Activation):
-
-    def __init__(self):
-        super().__init__()
-
-    def forward(self, z):
-        exp_values = np.exp(z - np.max(z, axis=1, keepdims=True))
-        probabilities = exp_values / np.sum(exp_values, axis=1, keepdims=True)
-        self.a = probabilities
-
-        return self.a
-
-    def backward(self):
-        pass
+        derivative = np.ones(self.z.shape)
+        return derivative
 
 
 class ReLu(Activation):
@@ -69,9 +53,9 @@ class ReLu(Activation):
         return self.a
 
     def backward(self):
-        local_derivative = np.where(self.z > 0, 1, 0)
+        derivative = np.where(self.z > 0, 1, 0)
 
-        return local_derivative
+        return derivative
 
 
 class Tanh(Activation):
@@ -87,8 +71,8 @@ class Tanh(Activation):
         return self.a
 
     def backward(self):
-        local_derivative = self.beta / self.alpha * (self.alpha ** 2 - self.a ** 2)
-        return local_derivative
+        derivative = self.beta / self.alpha * (self.alpha ** 2 - self.a ** 2)
+        return derivative
 
 
 class LeakyReLu(Activation):
@@ -102,9 +86,9 @@ class LeakyReLu(Activation):
         return self.a
 
     def backward(self):
-        local_derivative = np.where(self.z > 0, 1, 0.01)
+        derivative = np.where(self.z > 0, 1, 0.01)
 
-        return local_derivative
+        return derivative
 
 
 if __name__ == "__main__":

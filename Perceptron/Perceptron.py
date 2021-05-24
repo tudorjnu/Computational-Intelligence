@@ -16,9 +16,9 @@ def create_colours(y):
     colours = []
     for i in y:
         if i == 1:
-            colours.append("red")
+            colours.append("g")
         else:
-            colours.append("blue")
+            colours.append("r")
     return colours
 
 
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     y_simple = np.where(y_simple == 0, 1, -1)
 
     # load the data
-    X_difficult, y_difficult = noisy_moons = make_moons(n_samples=100, noise=0.1)
+    X_difficult, y_difficult = noisy_moons = make_moons(n_samples=100, noise=0.1, random_state=5)
     # transform the labels into -1 and 1
     y_difficult = np.where(y_difficult == 0, 1, -1)
 
@@ -100,18 +100,18 @@ if __name__ == "__main__":
     x_simple = np.linspace(-0.8, 0.5, 50)
     y_simple = f(x_simple, bias_simple, weights_simple[0], weights_simple[1])
 
-    x_difficult = np.linspace(-2.5, 3, 50)
+    x_difficult = np.linspace(-1.5, 2, 50)
     y_difficult = f(x_difficult, bias_difficult, weights_difficult[0], weights_difficult[1])
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
     sns.set_style("whitegrid")
     fig.suptitle('Perceptron Classification', fontsize=16)
-    ax1.scatter(X_simple[:, 0], X_simple[:, 1], c=y_simple_colours)
+    ax1.scatter(X_simple[:, 0], X_simple[:, 1], c=y_simple_colours, alpha=0.5)
     ax1.plot(x_simple, y_simple, c="black")
     ax1.set_title(f"Accuracy: {accuracy_simple}")
     ax1.axis(True)
 
-    ax2.scatter(X_difficult[:, 0], X_difficult[:, 1], c=y_difficult_colours)
+    ax2.scatter(X_difficult[:, 0], X_difficult[:, 1], c=y_difficult_colours, alpha=0.5)
     ax2.plot(x_difficult, y_difficult, c="black")
     ax2.set_title(f"Accuracy: {accuracy_difficult}")
 
